@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+	<style type="text/css">
+		.col1{
+			float: left;
+			width: 20%;
+			text-align: center;
+		}
+		.col2{
+			float: left;
+			width: 80%;
+		}
+		.row{
+			width: 100%;
+			height: 40px;
+		}
+	</style>
+	<body>
+
+		<div ng-app="myApp" ng-controller="myCtrl">
+		 	
+		 	<div class="select-bar">
+		 		<button class="button" ng-click="selectAll()">Select All</button>
+		 		<button class="button" ng-click="cancel()">Cancel</button>
+		 		<button class="button">Set As</button>
+		 	</div>
+
+			<div class="items" ng-repeat="name in names">
+				<div class="row" ng-init="name.checked = false" ng-click = "select(name.id); name.checked = !name.checked">					
+					<div class="col1">
+						<img ng-show="name.checked == false" src="img/chkunbx.png" width="20" height="20">
+						<img ng-show="name.checked == true" src="img/chkbx.png" width="20" height="20">
+					</div>
+					<div class="col2">
+						{{name.name}}
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<script>
+			var app = angular.module('myApp', []);
+			app.controller('myCtrl', function($scope) {
+			    $scope.names = [
+		        {name:'Jani',country:'Norway', id : 1},
+		        {name:'Carl',country:'Sweden', id : 2},
+		        {name:'Margareth',country:'England', id : 3},
+		        {name:'Hege',country:'Norway', id : 4},
+		        {name:'Joe',country:'Denmark', id : 5},
+		        {name:'Gustav',country:'Sweden', id : 6},
+		        {name:'Birgit',country:'Denmark', id : 7},
+		        {name:'Mary',country:'England', id : 8},
+		        {name:'Kai',country:'Norway', id : 9}
+		        ];
+
+				$scope.final = [];
+
+				$scope.select = function(id){
+					for(var i=0,length = $scope.names.length; i< length ;i++)
+					{
+						if($scope.names[i].id == id)
+						{
+							if($scope.names[i].checked == false)
+							{
+								$scope.final.push(id);
+							}
+							if($scope.names[i].checked == true)
+							{
+								$scope.final.splice($scope.final.indexOf(id),1);
+							}
+						}
+					}
+				}
+
+				$scope.selectAll = function(){
+					$scope.final = [];
+					for(var i =0,length= $scope.names.length; i<length ;i++)
+					{
+						$scope.names[i].checked = true;
+						$scope.final.push($scope.names[i].id);
+					}
+				}
+
+				$scope.cancel = function(){
+					for(var i =0,length= $scope.names.length; i<length ;i++)
+					{
+						$scope.names[i].checked = false;
+					}
+					$scope.final = [];
+				}
+			});
+		</script>
+
+	</body>
+</html>
