@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+	<style type="text/css">
+		.search-result{
+			border:1px solid black;
+		}
+	</style>
+	<body>
+
+		<div ng-app="myApp" ng-controller="myCtrl" ng-init="flag = true">
+		 	<div class="searchbox">
+		 		<input type="text" name="searchbox" ng-click="flag = true" ng-model="searchbox.input">
+		 	</div>
+		 	<div class="search-result" ng-show="searchbox.input && flag == true">
+		 		<div class="item">
+		 			<p ng-repeat="results in names| filter: searchbox.input" ng-click="select(results)">{{results.name}}</p>
+		 		</div>
+		 	</div>
+		</div>
+
+		<script>
+			var app = angular.module('myApp', []);
+			app.controller('myCtrl', function($scope) {
+			    $scope.names = [
+		        {name:'Jani',country:'Norway', id : 1},
+		        {name:'Carl',country:'Sweden', id : 2},
+		        {name:'Margareth',country:'England', id : 3},
+		        {name:'Hege',country:'Norway', id : 4},
+		        {name:'Joe',country:'Denmark', id : 5},
+		        {name:'Gustav',country:'Sweden', id : 6},
+		        {name:'Birgit',country:'Denmark', id : 7},
+		        {name:'Mary',country:'England', id : 8},
+		        {name:'Kai',country:'Norway', id : 9}
+		        ];
+
+		        $scope.select = function(data){
+		        	$scope.flag = false;
+		        	$scope.searchbox.input = data.name;
+		        }
+			});
+		</script>
+	</body>
+</html>
